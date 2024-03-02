@@ -1,2 +1,74 @@
 ---- Step 1 ----
 Update your machine 
+
+sudo apt update
+sudo apt upgrade
+
+---- Step 2 ----
+Installing LAMP
+"LAMP is a software package that includes the Apache web server, the MySQL database management system, and the PHP programming language, which are required to run WordPress."
+
+sudo apt install lamp-server^
+
+---- Step 3 ----
+Creating a WordPress database
+
+Login to MySQL:
+sudo mysql -u root -p
+
+Create a database:
+CREATE DATABASE wordpress;
+
+Create a user for the database:
+CREATE USER wordpress@localhost IDENTIFIED BY 'password_for_the_user';
+
+Grant the user access rights to the database:
+GRANT ALL PRIVILEGES ON wordpress.* TO wordpress@localhost;
+
+Exit MySQL:
+exit;
+
+---- Step 4 ----
+Downloading WordPress:
+
+cd /var/www/html
+wget https://wordpress.org/latest.tar.gz
+
+Unpack WordPress:
+tar -xzvf latest.tar.gz
+
+WordPress configure:
+
+Rename the WordPress folder:
+mv wordpress wordpress-site
+
+Create a WordPress configuration file:
+cp /var/www/html/wordpress-site/wp-config-sample.php /var/www/html/wordpress-site/wp-config.php
+
+Open the wp-config.php file in a text editor (I prefer vim): 
+sudo vim /var/www/html/wordpress-site/wp-config.php
+
+Find the following lines and change the values:
+// Database name
+define('DB_NAME', 'wordpress');
+
+// Username
+define('DB_USER', 'wordpress');
+
+// Password
+define('DB_PASSWORD', 'password_for_the_user');
+Save the file and exit the text editor.
+
+Setting access rights:
+sudo chown -R www-data:www-data /var/www/html/wordpress-site
+
+Open a web browser:
+Enter the IP address of your server in the address bar, for example:
+http://12.34.56.78/wordpress-site
+
+Follow the instructions of the WordPress installation wizard.
+
+After the installation is complete:
+You can log into your WordPress admin panel at:
+http://12.34.56.78/wordpress-site/wp-admin
+Enter the login and password you specified during installation.
